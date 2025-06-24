@@ -7,5 +7,6 @@ load_dotenv(BASE_DIR / ".env")
 
 class Config:
     BOT_TOKEN = os.getenv("BOT_TOKEN")
+    DB_PATH = BASE_DIR / "bot.db"
 
 config = Config()
