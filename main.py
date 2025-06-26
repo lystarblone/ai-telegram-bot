@@ -4,6 +4,7 @@ from aiogram import Bot, Dispatcher
 from config import config
 from handlers.start import router as start_router
 from handlers.upload import router as upload_router
+from handlers.ask import router as ask_router
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -11,7 +12,7 @@ logger = logging.getLogger(__name__)
 async def main():
     bot = Bot(token=config.BOT_TOKEN)
     dp = Dispatcher()
-    dp.include_routers(start_router, upload_router)
+    dp.include_routers(start_router, upload_router, ask_router)
     
     try:
         await dp.start_polling(bot)

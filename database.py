@@ -25,7 +25,6 @@ class Document(Base):
 
 class Database:
     def __init__(self):
-        os.makedirs(config.DB_PATH.parent, exist_ok=True)
         self.engine = create_engine(f"sqlite:///{config.DB_PATH}")
         Base.metadata.create_all(self.engine)
         self.Session = sessionmaker(bind=self.engine)
@@ -59,3 +58,7 @@ class Database:
             document = Document(user_id=user_id, file_name=file_name, content=content)
             session.add(document)
             session.commit()
+
+    def get_documents(self, user_id: int):
+        with self.Session() as session:
+            return session.query(Document).filter_by(user_id=user_id).all()
