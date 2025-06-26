@@ -8,5 +8,7 @@ load_dotenv(BASE_DIR / ".env")
 class Config:
     BOT_TOKEN = os.getenv("BOT_TOKEN")
     DB_PATH = BASE_DIR / "bot.db"
+    GOOGLE_CREDENTIALS_PATH = BASE_DIR / "credentials.json"
+    SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
 
 config = Config()
