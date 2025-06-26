@@ -6,6 +6,7 @@ from config import config
 import io
 from googleapiclient.http import MediaIoBaseDownload
 import os
+import json
 
 class GoogleDriveService:
     def __init__(self):
@@ -32,7 +33,10 @@ class GoogleDriveService:
         self.service = build("drive", "v3", credentials=self.credentials)
         return self.credentials.to_json()
 
+
     def load_credentials(self, token):
+        if isinstance(token, str):
+            token = json.loads(token)
         self.credentials = Credentials.from_authorized_user_info(token, config.SCOPES)
         self.service = build("drive", "v3", credentials=self.credentials)
 

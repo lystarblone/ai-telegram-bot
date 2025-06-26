@@ -1,38 +1,51 @@
-from aiogram import Router
-from aiogram.filters import Command
+from aiogram import Router, F
 from aiogram.types import Message
+from aiogram.filters import Command
+from aiogram.fsm.context import FSMContext
 from database import Database
-import re
+from handlers.states import AskStates
 
 router = Router()
 
 @router.message(Command("ask"))
-async def cmd_ask(message: Message):
+async def cmd_ask(message: Message, state: FSMContext):
     user_id = message.from_user.id
+    question = message.text.replace("/ask", "").strip()
+    
+    if not question:
+        await message.answer("Пожалуйста, задайте вопрос после команды /ask, например: /ask Как улучшить SMM?")
+        return
+    
     db = Database()
-    
     documents = db.get_documents(user_id)
+    
     if not documents:
-        await message.answer("У тебя нет загруженных документов. Используй /upload, чтобы загрузить файлы с Google Drive.")
+        await message.answer("У вас нет загруженных документов. Используйте /upload для загрузки файлов с Google Drive.")
         return
     
-    query = message.text.replace("/ask", "").strip()
-    if not query:
-        await message.answer("Пожалуйста, задай вопрос после /ask, например: /ask Что такое AI?")
-        return
+    context = "\n".join(doc.content for doc in documents)
     
-    best_match = None
-    best_score = 0
-    for doc in documents:
-        doc_text = doc.content.lower()
-        query_words = re.findall(r'\w+', query.lower())
-        matches = sum(1 for word in query_words if word in doc_text)
-        score = matches / len(query_words) if query_words else 0
-        if score > best_score:
-            best_score = score
-            best_match = doc
+    await state.update_data(context=context, last_question=question)
+    await state.set_state(AskStates.waiting_question)
     
-    if best_match and best_score > 0.3:
-        await message.answer(f"Найдено в документе '{best_match.file_name}':\n{best_match.content[:500]}... (показаны первые 500 символов)")
-    else:
-        await message.answer("Не нашел ответа в загруженных документах. Попробуй уточнить запрос или загрузи больше файлов с /upload.")
+    response = context[:1000] + ("..." if len(context) > 1000 else "")
+    await message.answer(f"Ответ на ваш вопрос '{question}':\n{response}\n\nЗадайте уточняющий вопрос или используйте /reset для сброса контекста.")
+
+@router.message(AskStates.waiting_question)
+async def process_followup_question(message: Message, state: FSMContext):
+    user_id = message.from_user.id
+    question = message.text.strip()
+    
+    data = await state.get_data()
+    context = data.get("context")
+    last_question = data.get("last_question")
+    
+    response = f"Предыдущий вопрос: {last_question}\nНовый вопрос: {question}\nКонтекст:\n{context[:1000]}" + ("..." if len(context) > 1000 else "")
+    await message.answer(response)
+    
+    await state.update_data(last_question=question)
+
+@router.message(Command("reset"))
+async def cmd_reset(message: Message, state: FSMContext):
+    await state.clear()
+    await message.answer("Контекст диалога сброшен. Задайте новый вопрос с помощью /ask.")

@@ -49,7 +49,9 @@ async def process_files(message: Message):
     db = Database()
     
     try:
-        drive_service.load_credentials(db.get_google_token(user_id))
+        token = db.get_google_token(user_id)
+        print(f"Loaded token: {token}")
+        drive_service.load_credentials(token)
         files = drive_service.list_files()
         if not files:
             await message.answer("На Google Drive нет файлов или доступ ограничен.")
