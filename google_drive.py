@@ -33,7 +33,6 @@ class GoogleDriveService:
         self.service = build("drive", "v3", credentials=self.credentials)
         return self.credentials.to_json()
 
-
     def load_credentials(self, token):
         if isinstance(token, str):
             token = json.loads(token)

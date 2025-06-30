@@ -57,7 +57,12 @@ class Database:
         with self.Session() as session:
             document = Document(user_id=user_id, file_name=file_name, content=content)
             session.add(document)
-            session.commit()
+            try:
+                session.commit()
+                print(f"Документ сохранен: user_id={user_id}, file_name={file_name}, content_length={len(content)}")
+            except Exception as e:
+                print(f"Ошибка при сохранении: {str(e)}")
+                session.rollback()
 
     def get_documents(self, user_id: int):
         with self.Session() as session:

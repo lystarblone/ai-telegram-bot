@@ -49,21 +49,31 @@ async def process_files(message: Message):
     db = Database()
     
     try:
-        token = db.get_google_token(user_id)
-        print(f"Loaded token: {token}")
-        drive_service.load_credentials(token)
+        print(f"Авторизация для user_id: {user_id}")
+        drive_service.load_credentials(db.get_google_token(user_id))
         files = drive_service.list_files()
+        print(f"Найдено файлов на Google Drive: {len(files)}")
         if not files:
             await message.answer("На Google Drive нет файлов или доступ ограничен.")
             return
         
         processor = TextProcessor()
+        processed_count = 0
         for file in files:
+            print(f"Проверка файла: {file['name']} (mimeType: {file['mimeType']})")
             if file["mimeType"] in ["application/pdf", "text/plain"]:
+                print(f"Обработка файла: {file['name']} (ID: {file['id']})")
                 content = drive_service.download_file(file["id"], file["mimeType"])
                 text = processor.extract_text(content, file["mimeType"])
+                print(f"Извлечен текст длиной: {len(text)} символов")
                 db.save_document(user_id, file["name"], text)
+                print(f"Сохранен документ: {file['name']} для user_id: {user_id}")
+                processed_count += 1
         
-        await message.answer("Файлы успешно загружены и сохранены!")
+        if processed_count == 0:
+            await message.answer("Нет поддерживаемых файлов (PDF или TXT) для загрузки.")
+        else:
+            await message.answer(f"Успешно загружено и сохранено {processed_count} файлов!")
     except Exception as e:
         await message.answer(f"Ошибка при загрузке файлов: {str(e)}")
+        print(f"Ошибка: {str(e)}")
