@@ -11,5 +11,9 @@ class Config:
     GOOGLE_CREDENTIALS_PATH = BASE_DIR / "credentials.json"
     SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
     AI_API_KEY = os.getenv("AI_API_KEY")
+    SUPPORTED_MIME_TYPES = {
+        "application/pdf": "pdf",
+        "text/plain": "txt"
+    }
 
 config = Config()
