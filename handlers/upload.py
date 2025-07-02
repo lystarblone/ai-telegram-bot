@@ -18,6 +18,7 @@ async def cmd_upload(message: Message, state: FSMContext):
     db = Database()
     
     try:
+        await state.clear()
         if db.get_google_token(user_id):
             await message.answer("Вы уже авторизованы. Загружаю файлы...")
             await process_files(message)
