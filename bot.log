@@ -1,0 +1,17 @@
+2025-07-02 15:50:26,732 - __main__ - INFO - Starting bot polling...
+2025-07-02 15:50:27,312 - __main__ - INFO - Выпадающее меню с командами успешно настроено
+2025-07-02 15:50:27,312 - aiogram.dispatcher - INFO - Start polling
+2025-07-02 15:50:27,516 - aiogram.dispatcher - INFO - Run polling for bot @your_personal_ai_assistant_bot id=7750650385 - 'Pidor'
+2025-07-02 15:50:29,485 - handlers.chat - INFO - Пользователь ID 458338707 начал общий диалог
+2025-07-02 15:50:29,485 - aiogram.event - INFO - Update id=747914052 is handled. Duration 1040 ms by bot id=7750650385
+2025-07-02 15:50:44,572 - database - INFO - Пользователь lystarblone (ID: 458338707) добавлен/обновлен
+2025-07-02 15:50:44,784 - handlers.start - INFO - Пользователь lystarblone (ID: 458338707) запустил бота
+2025-07-02 15:50:44,785 - aiogram.event - INFO - Update id=747914053 is handled. Duration 228 ms by bot id=7750650385
+2025-07-02 15:50:48,052 - googleapiclient.discovery_cache - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-07-02 15:50:48,054 - google_drive - INFO - Учетные данные успешно загружены
+2025-07-02 15:50:49,077 - google_drive - INFO - Получено 50 файлов с Google Drive
+2025-07-02 15:50:50,554 - google_drive - INFO - Скачан файл с ID 1KVaC5VPoid4NjI1prkoLxobM108ihgmz
+2025-07-02 15:50:50,571 - database - INFO - Документ New.pdf сохранен для user_id: 458338707
+2025-07-02 15:50:50,571 - handlers.upload - INFO - Обработан файл New.pdf для user_id 458338707
+2025-07-02 15:50:50,807 - handlers.upload - INFO - Загружено 1 файлов для user_id 458338707
+2025-07-02 15:50:50,807 - aiogram.event - INFO - Update id=747914054 is handled. Duration 3002 ms by bot id=7750650385
