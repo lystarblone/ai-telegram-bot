@@ -15,3 +15,14 @@
 2025-07-02 15:50:50,571 - handlers.upload - INFO - Обработан файл New.pdf для user_id 458338707
 2025-07-02 15:50:50,807 - handlers.upload - INFO - Загружено 1 файлов для user_id 458338707
 2025-07-02 15:50:50,807 - aiogram.event - INFO - Update id=747914054 is handled. Duration 3002 ms by bot id=7750650385
+2025-07-21 21:00:41,583 - __main__ - INFO - Starting bot polling...
+2025-07-21 21:00:42,077 - __main__ - INFO - Выпадающее меню с командами успешно настроено
+2025-07-21 21:00:42,078 - aiogram.dispatcher - INFO - Start polling
+2025-07-21 21:00:42,279 - aiogram.dispatcher - INFO - Run polling for bot @your_personal_ai_assistant_bot id=7750650385 - 't.helper'
+2025-07-21 21:01:03,231 - database - INFO - Пользователь lystarblone (ID: 458338707) добавлен/обновлен
+2025-07-21 21:01:03,517 - handlers.start - INFO - Пользователь lystarblone (ID: 458338707) запустил бота
+2025-07-21 21:01:03,517 - aiogram.event - INFO - Update id=747914070 is handled. Duration 382 ms by bot id=7750650385
+2025-07-21 21:01:12,358 - aiogram.dispatcher - WARNING - Received SIGINT signal
+2025-07-21 21:01:12,361 - aiogram.dispatcher - INFO - Polling stopped for bot @your_personal_ai_assistant_bot id=7750650385 - 't.helper'
+2025-07-21 21:01:12,361 - aiogram.dispatcher - INFO - Polling stopped
+2025-07-21 21:01:12,613 - __main__ - INFO - Bot session closed
